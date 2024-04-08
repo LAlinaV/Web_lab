@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Верстка страницы</title>
+    <style>
+        .container {
+          display: flex;
+          justify-content: space-between;
+        }
+        .input-block {
+          width: 45%;
+          margin-bottom: 20px;
+        }
+        .output-block {
+          width: 45%;
+          border: 1px solid #ccc;
+          padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center;">
+    <div>
+        <form>
+
+            <input type="button" value="1 - ввод информации о блюде" id="dishName"><br>
+            <input type="button" value="2 - получение информации о блюде" id="dishInfo"><br>
+            <input type="button" value="3 - удаление информации о блюде" id="dishInfoDel"><br>
+            <input type="button" value="4 - перечень всех блюд" id="dishList"><br>
+            <input type="button" value="5 - Очистить хранилище" id="clear"><br>
+        </form>
+    </div>
+</div>
+<br>
+<div class="output-block" style="text-align: center;width:100%">
+    <h3>Результат:</h3>
+    <p id="result">Здесь будет результат</p>
+</div>
+<script src="dish.js" defer></script>
+</body>
+</html>
