@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Верстка страницы</title>
+    <script src="app.js"></script>
+    <style>
+        .container {
+          display: flex;
+          justify-content: space-between;
+        }
+        .input-block {
+          width: 45%;
+          margin-bottom: 20px;
+        }
+        .output-block {
+          width: 45%;
+          border: 1px solid #ccc;
+          padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center;">
+
+    <input onclick="ClearStorage()" value="Подготовить хранилище" type="button"><br>
+
+    <input onclick="AskValue1()" value="Ввод информации о блюде" type="button"><br>
+
+
+    <input onclick="AskValue2()" value="Удаление информации о блюде" type="button"><br>
+
+    
+    <input onclick="AskValue3()" value="Получение информации о блюде" type="button"><br>
+
+    
+    <input onclick="GetAll()" value="Перечень всех блюд" type="button"><br>
+
+</div>
+<br>
+<div class="output-block" style="text-align: center;width:100%">
+    <h3>Результат:</h3>
+    <p id="result">Здесь будет результат</p>
+</div>
+</body>
+</html>
