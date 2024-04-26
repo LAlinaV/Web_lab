@@ -1,0 +1,115 @@
+<h2>Ресторан «Кухмистр»</h2>
+
+<div id='IPage'>
+</div>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+
+  "use strict";
+  window.onhashchange=switchToStateFromURLHash;
+
+  var SPAState={};
+  
+  function switchToStateFromURLHash() {
+    var URLHash=window.location.hash;
+
+    var stateStr=URLHash.substr(1);
+
+    if ( stateStr!="" ) { 
+      var parts=stateStr.split("_");
+      SPAState={ pagename: parts[0] }; 
+    }
+    else
+      SPAState={pagename:'Main'};
+
+    console.log('Новое состояние приложения:');
+    console.log(SPAState);
+
+   
+    var pageHTML="";
+    switch ( SPAState.pagename ) {
+      case 'Main':
+        pageHTML+="<h3>Только аутентичная белорусская и литвинская кухня</h3>";
+        pageHTML+="<p>Верные хранители вековых традиций нашей кухни.<br>Домашний уют, аутентичная атмосфера,<br>дегустационные сеты кухни и напитков ― вкусный вояж<br>по Беларуси и Великому княжеству Литовскому.<br>Услышать живую белорусскую музыку?<br>Больше узнать о стране и её культуре?<br>Купить сувениры?<br>Конечно, в «Кухмистр»!<br></p>";         
+        break;
+      case 'Menu':
+        loadData()
+        break;
+    }
+    document.getElementById('IPage').innerHTML=pageHTML;
+
+  }
+
+  
+  function switchToState(newState) {
+    var stateStr=newState.pagename;
+    location.hash=stateStr;
+  }
+
+  function switchToMainPage() {
+    switchToState( { pagename:'Main' } );
+  }
+
+  function switchToAboutPage() {
+    switchToState( { pagename:'Menu' } );
+  }
+
+  function loadData() {
+    $.ajax({
+      url: 'info.json',
+      type:'GET',
+      dataType:'json',
+      success:processData,
+      error:errorHandler
+    });
+
+  }
+
+  // Функция для обработки загруженных данных
+  function processData(data) {
+    let tableHTML = "<table><tr><th>Название</th><th>Описание</th></tr>";
+      // Перебираем данные из JSON и добавляем их в таблицу
+      $.each(data, function(key, value) {
+        tableHTML += `<tr><td>${key}</td><td>${value}</td></tr>`;
+      });
+      tableHTML += "</table>";
+      // Вставляем таблицу в элемент с id 'IPage'
+      document.getElementById('IPage').innerHTML=tableHTML
+  }
+
+  function errorHandler(jqXHR, StatusStr, ErrorStr) {
+    console.log('Ошибка при загрузке данных:');
+    console.log(jqXHR); // Выводим объект jqXHR, содержащий информацию о запросе и ошибке
+    console.log(StatusStr); // Выводим строку статуса
+    console.log(ErrorStr); // Выводим описание ошибки
+    alert(StatusStr + ' ' + ErrorStr);
+  }
+
+function downloadFile() {
+  
+  $.ajax({
+      url: 'http://localhost:3000/download/info.json',
+      type:'GET',
+      dataType:'json',
+      success:DataLoaded,
+      error:errorHandler
+    });
+
+    const url = `/download/${encodeURIComponent("info.json")}`;
+    window.location.href = url;
+}
+
+function DataLoaded(data)
+{
+  console.log('загруженные через AJAX данные:');
+  console.log(data);
+}
+
+switchToStateFromURLHash();
+
+</script>
+
+<br>
+<input type=button value='Главная' onclick='switchToMainPage()'>
+<input type=button value='Меню' onclick='switchToAboutPage()'>
+<input type=button value='Скачать меню' onclick='downloadFile()'>
